@@ -1,25 +1,32 @@
-.sidebarChat {
+#channel_bar {
     display: flex;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid lightgray;
     height:60px;
     cursor: pointer;
+    overflow-x:hidden;
+    overflow-y:hidden;
+    border-bottom: 2px solid var(--room_h2);
 }
 
-.sidebarChat:hover {
-    background-color: #3e93fd;
-    color: white;
+#channel_name{
+    font-size:20px;
+    font-weight:500;
+    width:100%;
+    color:var(--room_hf2);
 }
 
-.sidebarChat__info {
-    margin-left: 15px;
-    position: relative;
-    width: 100%;
+#last_message{
+    font-size:12px;
+    font-weight: 500;
+    width:100%;
+    align-items: center;
+    color:var(--room_hf2);
 }
 
-.sidebarChat__info > small {
-    position: absolute;
-    top: 5px;
-    right: 0;
+#channel_bar:hover {
+    background:var(--room_h2);
 }
+
+
+

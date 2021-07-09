@@ -1,49 +1,22 @@
 import React, { useEffect, useState } from "react";
-import "./sidebar.css";
-import { Avatar, Modal, TextField } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Avatar, TextField } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { Button, Grid } from "@material-ui/core";
 import SidebarChat from "./SidebarChat.js";
-import { useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
 import { db, auth } from "../firebase";
+import { setChatId, setChatName } from "../../store/actions";
+import { connect } from "react-redux";
+import {Fab} from "@material-ui/core"
+import "./sidebar.css";
 
-// Matrial ui modal template
-const getModalStyle = () => {
-  const top = 50;
-  const left = 50;
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-};
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: "absolute",
-    width: "min(90%,400px)",
-    height: "max(200px,30%)",
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-//--------------------------------------------------
-
-const Sidebar = () => {
-  const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
-  const user = useSelector(selectUser);
-
+const Sidebar = (props) => {
+  const { user, setChatIdAction, setChatNameAction } = props;
   //State management
   const [chats, setChats] = useState([]);
   const [rooms, setrooms] = useState([]);
   const [open, setOpen] = useState(false);
-  const [channel, setChannel] = useState();
-  const [password, setPassword] = useState();
+  const [channel, setChannel] = useState("");
+  const [password, setPassword] = useState("");
 
   // on component mount fetch chat rooms names
   useEffect(() => {
@@ -69,22 +42,21 @@ const Sidebar = () => {
     // add new chat to firebase
     if (channel && password) {
       let added = false;
-      chats.forEach((x)=>{
-        if(x.data.chatName === channel){
-          console.log(x)
+      chats.forEach((x) => {
+        if (x.data.chatName === channel) {
+          console.log(x);
           added = true;
         }
-      })
-      if(!added){
+      });
+      if (!added) {
         db.collection("chats").add({
-        chatName: channel,
-        password: password,
-        host: user.email,
-      })
-      alert("Channel created , Join the channel to update your Channel feed")}
-      else alert("This Channel Name already exists")
-    }
-    else alert("Both credentials are required")
+          chatName: channel,
+          password: password,
+          host: user.email,
+        });
+        alert("Channel created , Join the channel to update your Channel feed");
+      } else alert("This Channel Name already exists");
+    } else alert("Both credentials are required");
     setOpen(false);
     setChannel("");
     setPassword("");
@@ -113,17 +85,33 @@ const Sidebar = () => {
           alert("Invalid Channel Credentials");
         } else alert("Channel succesfully added");
       } else alert("You are already a member of this Channel");
-    }
-    else alert("Both credentials are required")
+    } else alert("Both credentials are required");
     setOpen(false);
     setChannel("");
     setPassword("");
   };
 
+  const logOut = () => {
+    //Clear local user channel states before logout.
+    setChatIdAction("");
+    setChatNameAction("");
+    auth.signOut();
+  };
+
   return (
     <>
-      <Modal open={open} onClose={(e) => setOpen(false)}>
-        <div style={modalStyle} className={classes.paper}>
+      <div id="sidebar">
+        <div id="sidebar__header">
+          <div onClick={logOut}>
+            <Avatar src={user.photo}/>
+            <small type="submit">Logout</small>
+          </div>
+          <Fab id="sidebar__create" onClick={(e) => setOpen(!open)}>
+            <AddIcon/>
+          </Fab>
+        </div>
+
+        <div hidden={!open} id="channel_menu">
           <Grid container xs={12} justify="center">
             <form>
               <Grid item xs={12} justify="center">
@@ -142,32 +130,16 @@ const Sidebar = () => {
               </Grid>
               <Grid item xs={12}>
                 <Grid container xs={12} justify="center">
-                  <Button type="submit" onClick={addChat}>
-                    Create
-                  </Button>
+                  <Button onClick={addChat}>Create</Button>
                 </Grid>
               </Grid>
               <Grid item xs={12}>
                 <Grid container xs={12} justify="center">
-                  <Button type="submit" onClick={joinChat}>
-                    Join
-                  </Button>
+                  <Button onClick={joinChat}>Join</Button>
                 </Grid>
               </Grid>
             </form>
           </Grid>
-        </div>
-      </Modal>
-
-      <div className="sidebar">
-        <div className="sidebar__header">
-          <div className="logout" onClick={() => auth.signOut()}>
-            <Avatar src={user.photo} className="sidebar__avatar" />
-            <small>Logout</small>
-          </div>
-          <div className="sidebar__create" onClick={(e) => setOpen(true)}>
-            <AddIcon style={{ paddingRight: "10px" }} />
-          </div>
         </div>
 
         <div className="sidebar__chats">
@@ -180,4 +152,17 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+const mapStoreStateToProps = (state) => {
+  return {
+    ...state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setChatIdAction: (chatId) => dispatch(setChatId(chatId)),
+    setChatNameAction: (chatName) => dispatch(setChatName(chatName)),
+  };
+};
+
+export default connect(mapStoreStateToProps, mapDispatchToProps)(Sidebar);

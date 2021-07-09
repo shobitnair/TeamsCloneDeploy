@@ -1,15 +1,15 @@
 import { Avatar } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setChat } from "../features/chatSlice";
+import { connect } from "react-redux";
+import { setChatId, setChatName } from "../../store/actions";
 import { db } from "../firebase";
 import "./sidebarChat.css";
+import { Grid } from "@material-ui/core";
 
-
-const SidebarChat = ({ id, chatName }) => {
-  const dispatch = useDispatch();
+const SidebarChat = (props) => {
+  const { id, chatName, setChatIdAction, setChatNameAction } = props;
   const [chatInfo, setChatInfo] = useState("");
-  
+
   // on component mount fetch room by id and get its messages
   useEffect(() => {
     db.collection("chats")
@@ -22,25 +22,30 @@ const SidebarChat = ({ id, chatName }) => {
   }, [id]);
 
   return (
-    <div
+    <Grid
+      container
+      xs={12}
       onClick={() => {
-        dispatch(
-          setChat({
-            chatId: id,
-            chatName: chatName,
-          })
-        );
+        setChatIdAction(id);
+        setChatNameAction(chatName);
       }}
-      className="sidebarChat"
+      id="channel_bar"
     >
-
-      <div className="sidebarChat__info">
-        <h3>{chatName}</h3>
-        <p>{chatInfo[0]?.message}</p>
-
-      </div>
-    </div>
+      <Grid item xs={12} id="channel_name">
+        {chatName}
+      </Grid>
+      <Grid item xs={12} id="last_message">
+      {(chatInfo[0])?(chatInfo[0]?.displayName+ " : " + chatInfo[0]?.message):""}
+      </Grid>
+    </Grid>
   );
 };
 
-export default SidebarChat;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setChatIdAction: (chatId) => dispatch(setChatId(chatId)),
+    setChatNameAction: (chatName) => dispatch(setChatName(chatName)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SidebarChat);
