@@ -57,7 +57,7 @@
 
 
 #navbar{
-  height:max(40px,7%);
+  height:min(40px,7%);
   width:100%;
   background:var(--room_navbg);
   position:fixed;
