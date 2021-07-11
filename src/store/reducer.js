@@ -3,7 +3,6 @@ import Actions from "./actions";
 const initState = {
   identity: "",
   isRoomHost: false,
-  connectOnlyWithAudio: false,
   roomId: null,
   twilioAccessToken: null,
   showOverlay: true,
@@ -12,6 +11,7 @@ const initState = {
   user:"",
   chatId: "",
   chatName: "",
+  page:false,
 };
 
 const reducer = (state = initState, action) => {
@@ -25,11 +25,6 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         isRoomHost: action.isRoomHost,
-      };
-    case Actions.SET_CONNECT_ONLY_WITH_AUDIO:
-      return {
-        ...state,
-        connectOnlyWithAudio: action.onlyWithAudio,
       };
     case Actions.SET_ROOM_ID:
       return {
@@ -70,6 +65,11 @@ const reducer = (state = initState, action) => {
       return{
         ...state,
         chatName: action.chatName,
+      }
+    case Actions.SET_PAGE :
+      return{
+        ...state,
+        page: action.page
       }
     default:
       return state;
