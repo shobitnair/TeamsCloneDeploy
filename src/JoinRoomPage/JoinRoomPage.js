@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { setIsRoomHost } from "../store/actions";
+import { setIsRoomHost , setTwilioAccessToken , setRoomId , setIdentity} from "../store/actions";
 import { useLocation } from "react-router-dom";
 import JoinRoomContent from "./JoinRoomContent";
 import { Grid, Hidden } from "@material-ui/core";
@@ -73,6 +73,9 @@ const mapStoreStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setIsRoomHostAction: (isRoomHost) => dispatch(setIsRoomHost(isRoomHost)),
+    setTwilioAccessTokenAction: (accessToken) => dispatch(setTwilioAccessToken(accessToken)),
+    setRoomIdAction:(room) => dispatch(setRoomId(room)),
+    setIdentityAction:(identity)=>dispatch(setIdentity(identity)),
   };
 };
 

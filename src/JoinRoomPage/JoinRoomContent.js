@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { checkIfRoomExists } from "../utils/twilioUtils";
 import {
-	setConnectOnlyWithAudio,
 	setIdentity,
 	setRoomId,
 } from "../store/actions";
