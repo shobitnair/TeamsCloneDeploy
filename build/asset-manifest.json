@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/static/css/main.08ce2c7c.chunk.css",
+    "main.js": "/static/js/main.04346174.chunk.js",
+    "main.js.map": "/static/js/main.04346174.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.36bec40f.js",
+    "runtime-main.js.map": "/static/js/runtime-main.36bec40f.js.map",
+    "static/css/2.68b64559.chunk.css": "/static/css/2.68b64559.chunk.css",
+    "static/js/2.b1ffa11c.chunk.js": "/static/js/2.b1ffa11c.chunk.js",
+    "static/js/2.b1ffa11c.chunk.js.map": "/static/js/2.b1ffa11c.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.68b64559.chunk.css.map": "/static/css/2.68b64559.chunk.css.map",
+    "static/css/main.08ce2c7c.chunk.css.map": "/static/css/main.08ce2c7c.chunk.css.map",
+    "static/js/2.b1ffa11c.chunk.js.LICENSE.txt": "/static/js/2.b1ffa11c.chunk.js.LICENSE.txt",
+    "static/media/chat.a2176128.svg": "/static/media/chat.a2176128.svg",
+    "static/media/home5.1dfc7a74.svg": "/static/media/home5.1dfc7a74.svg",
+    "static/media/home6.0f2730db.svg": "/static/media/home6.0f2730db.svg",
+    "static/media/home7.be11a008.svg": "/static/media/home7.be11a008.svg",
+    "static/media/join3.f7286552.svg": "/static/media/join3.f7286552.svg",
+    "static/media/join4.4ffd8b51.svg": "/static/media/join4.4ffd8b51.svg",
+    "static/media/login3.8bac2834.svg": "/static/media/login3.8bac2834.svg",
+    "static/media/sendMessageButton.21b28e18.svg": "/static/media/sendMessageButton.21b28e18.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.36bec40f.js",
+    "static/css/2.68b64559.chunk.css",
+    "static/js/2.b1ffa11c.chunk.js",
+    "static/css/main.08ce2c7c.chunk.css",
+    "static/js/main.04346174.chunk.js"
+  ]
+}
